@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goumang.sys.mapper.SysUserMapper">
+
+    <select id="selectByParams" parameterType="java.util.Map" resultType="com.goumang.sys.api.vo.SysUserVo">
+        select a.*
+              ,sur.usroId,sur.roleId
+        from sys_user a
+        left join sys_user_role sur on sur.userId = a.userId
+        <if test="roleId!=null" >and sur.roleId = #{roleId}</if>
+        <include refid="conditionSql"></include>
+        <if test="orderBy!=null" >order by ${orderBy}</if>
+    </select>
+
+    <sql id="conditionSql">
+        <where>
+            <if test="userId!=null" >and a.userId = #{userId}</if>
+            <if test="status!=null" >and a.status = #{status}</if>
+            <if test="userName!=null" >and a.userName = #{userName}</if>
+            <if test="loginName!=null" >and a.loginName = #{loginName}</if>
+            <if test="phone!=null" >and a.phone = #{phone}</if>
+            <if test="email!=null" >and a.email = #{email}</if>
+            <if test="password!=null" >and a.password = #{password}</if>
+            <if test="userImage!=null" >and a.userImage = #{userImage}</if>
+            <if test="createDate!=null" >and a.createDate = #{createDate}</if>
+            <if test="operDate!=null" >and a.operDate = #{operDate}</if>
+        </where>
+    </sql>
+</mapper>

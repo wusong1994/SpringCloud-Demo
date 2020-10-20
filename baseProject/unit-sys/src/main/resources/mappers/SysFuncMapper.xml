@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goumang.sys.mapper.SysFuncMapper">
+
+    <select id="selectByParams" parameterType="java.util.Map" resultType="com.goumang.sys.api.vo.SysFuncVo">
+        select a.*
+              ,srf.roleId, srf.rofuId
+        from sys_func a
+        left join sys_role_func srf on a.funcId = srf.funcId
+        <if test="roleId!=null" >and srf.roleId = #{roleId}</if>
+        <include refid="conditionSql"></include>
+        <if test="orderBy!=null">order by ${orderBy}</if>
+    </select>
+
+    <sql id="conditionSql">
+        <where>
+            <if test="funcId!=null" >and a.funcId = #{funcId}</if>
+            <if test="funcCode!=null" >and a.funcCode = #{funcCode}</if>
+            <if test="funcName!=null" >and a.funcName = #{funcName}</if>
+            <if test="funcValue!=null" >and a.funcValue = #{funcValue}</if>
+        </where>
+    </sql>
+</mapper>

@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: unit-sys
+
+  cloud:
+    config:
+      profile: base
+      discovery:
+        enabled: true
+        service-id: server-config
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: @eureka.client.serviceUrl.defaultZone@
+  instance:
+    prefer-ip-address: true
+    instance-id:  ${spring.cloud.client.ip-address}:${server.port}

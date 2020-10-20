@@ -1,0 +1,43 @@
+server:
+  port: 8014
+
+spring:
+  session:
+    store-type: redis
+
+  redis:
+    host: @spring.redis.host@
+    port: @spring.redis.port@
+    password: @spring.redis.password@
+
+  datasource:
+    url: @datasource.url@
+    username: @datasource.username@
+    password: @datasource.password@
+    driver-class-name: @datasource.driver-class-name@
+    validation-query: SELECT 1
+    test-while-idle: true
+    time-between-eviction-runs-millis: 180000
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mapper:
+  style: normal
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mappers/*Mapper.xml
+
+#log
+logging:
+  level:
+    com:
+      goumang: @logging.level@
+
+#goumang插件
+goumang:
+  oss:
+    type: @goumang.oss.type@
+    bucket: @goumang.oss.bucket@

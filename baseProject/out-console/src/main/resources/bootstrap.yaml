@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: out-console
+
+  main:
+    allow-bean-definition-overriding: true
+
+  cloud:
+    config:
+      profile: base
+      discovery:
+        enabled: true
+        service-id: server-config
+
+  resources:
+    #指定静态资源目录
+    static-locations: @spring.resources.static-locations@
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: @eureka.client.serviceUrl.defaultZone@
+  instance:
+    prefer-ip-address: true
+    instance-id:  ${spring.cloud.client.ip-address}:${server.port}
+

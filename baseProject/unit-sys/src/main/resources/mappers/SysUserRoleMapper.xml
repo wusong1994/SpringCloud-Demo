@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goumang.sys.mapper.SysUserRoleMapper">
+
+    <select id="selectPermissions" parameterType="java.util.Map" resultType="Map">
+        select distinct sf.funcCode, concat(sa.method, ' ', sa.actionCode) as actionCode, sa.method
+        from sys_user_role a, sys_role_func srf, sys_role_action sra, sys_func sf, sys_action sa
+        where a.roleId = srf.roleId
+        and a.roleId = sra.roleId
+        and srf.funcId = sf.funcId
+        and srf.funcId = sra.funcId
+        and sra.actionId = sa.actionId
+        <include refid="conditionSql" />
+        order by sf.funcCode, sa.method
+    </select>
+
+    <sql id="conditionSql">
+        <if test="usroId!=null" >and a.usroId = #{usroId}</if>
+        <if test="userId!=null" >and a.userId = #{userId}</if>
+        <if test="roleId!=null" >and a.roleId = #{roleId}</if>
+    </sql>
+</mapper>

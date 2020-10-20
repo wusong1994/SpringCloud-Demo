@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goumang.sys.mapper.SysMenuMapper">
+    <select id="selectUserMenu" parameterType="java.util.Map" resultType="com.goumang.sys.api.po.SysMenuPo">
+        select distinct a.*
+        from sys_menu a, sys_user_role sur, sys_role_func srf
+        where FIND_IN_SET(srf.funcId, a.funcIds) &gt; 0
+        and srf.roleId = sur.roleId
+        <if test="userId!=null">and sur.userId = #{userId}</if>
+        order by a.parentId, a.sort
+    </select>
+
+    <update id="updateHome" parameterType="long">
+        update sys_menu
+        set home = 0
+        where menuId != #{menuId}
+        and parentId = 0
+    </update>
+
+    <sql id="conditionSql">
+        <if test="menuId!=null" >and a.menuId = #{menuId}</if>
+        <if test="parentId!=null" >and a.parentId = #{parentId}</if>
+        <if test="funcIds!=null" >and a.funcIds = #{funcIds}</if>
+        <if test="menuTitle!=null" >and a.menuTitle = #{menuTitle}</if>
+        <if test="menuPath!=null" >and a.menuPath = #{menuPath}</if>
+        <if test="icon!=null" >and a.icon = #{icon}</if>
+        <if test="sort!=null" >and a.sort = #{sort}</if>
+    </sql>
+</mapper>

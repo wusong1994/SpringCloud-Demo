@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goumang.sys.mapper.SysActionMapper">
+
+    <select id="selectByParams" parameterType="java.util.Map" resultType="com.goumang.sys.api.vo.SysActionVo">
+        select a.*
+              ,sra.roleId,sra.roacId
+        from sys_action a
+        left join sys_role_action sra on sra.actionId = a.actionId
+        <if test="roleId!=null" >and sra.roleId = #{roleId}</if>
+        <include refid="conditionSql"></include>
+        <if test="orderBy!=null">order by ${orderBy}</if>
+    </select>
+
+    <sql id="conditionSql">
+        <where>
+            <if test="actionId!=null" >and a.actionId = #{actionId}</if>
+            <if test="funcId!=null" >and a.funcId = #{funcId}</if>
+            <if test="actionCode!=null" >and a.actionCode = #{actionCode}</if>
+            <if test="actionName!=null" >and a.actionName = #{actionName}</if>
+        </where>
+    </sql>
+</mapper>

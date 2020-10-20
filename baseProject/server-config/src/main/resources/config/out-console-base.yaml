@@ -1,0 +1,40 @@
+server:
+  port: 8031
+
+spring:
+  session:
+    store-type: redis
+
+  redis:   #redis-config
+    host: @spring.redis.host@
+    port: @spring.redis.port@
+    password: @spring.redis.password@
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 100000
+        read-timeout: 100000
+
+#log
+logging:
+  level:
+    com:
+      goumang: @logging.level@
+
+#goumang插件
+goumang:
+  oss:
+    type: @goumang.oss.type@
+    bucket: @goumang.oss.bucket@

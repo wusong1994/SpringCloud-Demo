@@ -1,0 +1,30 @@
+server:
+  port: 8701
+spring:
+  application:
+    name: server-config
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:config/
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: @eureka.client.serviceUrl.defaultZone@
+  instance:
+    prefer-ip-address: true
+    instance-id:  ${spring.cloud.client.ip-address}:${server.port}
+
+logging:
+  level:
+    org:
+      springframework: ERROR
+    com:
+      goumang: @logging.level@
